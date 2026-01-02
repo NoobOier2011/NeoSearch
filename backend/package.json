@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "NeoSearch Backend",
+  "keywords": [
+    "Backend",
+    "NeoSeach",
+    "AI"
+  ],
+  "homepage": "https://github.com/NoobOier2011/NeoSearch#readme",
+  "bugs": {
+    "url": "https://github.com/NoobOier2011/NeoSearch/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoobOier2011/NeoSearch.git"
+  },
+  "license": "MIT",
+  "author": "NoobOier2011",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  }
+}
