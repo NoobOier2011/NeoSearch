@@ -1,0 +1,7 @@
+{
+  "ServicePort" : 5000,
+  "AIapi" : {
+    "AIapiKey" : "Iloveyou",
+    "baseUrl" : "https://open.bigmodel.cn/api/paas/v4"
+  }
+}

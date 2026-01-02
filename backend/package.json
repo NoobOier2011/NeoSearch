@@ -17,12 +17,15 @@
   },
   "license": "MIT",
   "author": "NoobOier2011",
-  "type": "commonjs",
-  "main": "index.js",
+  "type": "module",
+  "main": "app.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node app.js"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "axios": "^1.13.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "zhipuai-sdk-nodejs-v4": "^0.1.12"
   }
 }
