@@ -17,10 +17,10 @@ class App {
     this.App.use(express.json());
     this.App.use(express.urlencoded({ extended: true }));
   
-  // 静态文件服务
+    // 静态文件服务
     this.App.use(express.static(join(__dirname, 'public')));
   
-  // 调试中间件
+    // 调试中间件
     this.App.use((req, res, next) => {
       console.log(`${req.method} ${req.path}`);
       console.log('Body:', req.body);
