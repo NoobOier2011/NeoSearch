@@ -14,8 +14,8 @@ const Config = require(join(__dirname, '..', 'config.json'));
 export class AISearchService {
   constructor() {
     this.AI = new ZhipuAI({
-      apiKey: 'c0576cd021b94810bab132060f418b0b.85489cQVkiWlJ21p',
-      baseUrl: 'https://open.bigmodel.cn/api/paas/v4',
+      apiKey: Config.AIapi.AIapiKey,
+      baseUrl: Config.AIapi.baseUrl,
       timeout: 60000,
       cacheToken: true
     });
