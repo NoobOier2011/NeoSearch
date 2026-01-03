@@ -37,7 +37,7 @@ class App {
         const aiService = new AISearchService();
         let question = req.body.question;
 
-        console.log('Received question:', question);
+        // console.log('Received question:', question);
         
         if (!question) {
           return res.status(400).json({ error: 'Question is required' });
