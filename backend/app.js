@@ -1,5 +1,5 @@
+// Basic modules
 import { createRequire } from 'module';
-import { AISearchService } from './services/AISearchService.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -8,6 +8,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const express = require('express');
 const Config = require(join(__dirname, 'config.json'));
+
+// NeoSearch modules
+import { AISearchService } from './services/AISearchService.js';
+import { AITransformService } from './services/AITransformService.js';
 
 class App {
   constructor(App) {
@@ -29,10 +33,11 @@ class App {
     });
           
     this.AISearchService();
+    this.AITransformService();
   }
 
   AISearchService() {
-    this.App.post('/AskAI', async (req, res) => {
+    this.App.post('/AskAItoSearch', async (req, res) => {
       try {
         const aiService = new AISearchService();
         let question = req.body.question;
@@ -47,6 +52,27 @@ class App {
         res.json(answer);
       } catch (error) {
         console.error('Error in /AskAI:', error);
+        res.status(500).json({ error: error.message });
+      }
+    });
+  }
+
+  AITransformService() {
+    this.App.post('/AskAItoTransform', async (req, res) => {
+      try {
+        const aiService = new AITransformService();
+        let question = req.body.question;
+
+        // console.log('Received question:', question);
+        
+        if (!question) {
+          return res.status(400).json({ error: 'Question is required' });
+        }
+        
+        let answer = (await aiService.Ask(question));
+        res.json(answer);
+      } catch (error) {
+        console.error('Error in /AskAItoTransform:', error);
         res.status(500).json({ error: error.message });
       }
     });
