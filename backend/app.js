@@ -12,6 +12,7 @@ const Config = require(join(__dirname, 'config.json'));
 // NeoSearch modules
 import { AISearchService } from './services/AISearchService.js';
 import { AITransformService } from './services/AITransformService.js';
+import { WebSearchService } from './services/WebSearchService.js';
 
 class App {
   constructor(App) {
@@ -34,6 +35,7 @@ class App {
           
     this.AISearchService();
     this.AITransformService();
+    this.WebSearchService();
   }
 
   AISearchService() {
@@ -73,6 +75,32 @@ class App {
         res.json(answer);
       } catch (error) {
         console.error('Error in /AskAItoTransform:', error);
+        res.status(500).json({ error: error.message });
+      }
+    });
+  }
+
+  WebSearchService() {
+    this.App.post('/WebSearch', async (req, res) => {
+      try {
+        const webService = new WebSearchService();
+        let question = req.body.question;
+
+        // console.log('Received question:', question);
+        
+        if (!question) {
+          return res.status(400).json({ error: 'Question is required' });
+        }
+        
+        let answer;
+        
+        (async () => {
+          answer = (await webService.Ask(question));
+          res.json(answer);
+        })();
+
+      } catch (error) {
+        console.error('Error in /WebSearch:', error);
         res.status(500).json({ error: error.message });
       }
     });

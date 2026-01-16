@@ -109,7 +109,7 @@ export class WebSearchService {
     while (this.requestQueue.length > 0) {
       const request = this.requestQueue.shift();
       try {
-        const result = await this.executeRequest(request.type, request.data);
+        const result = await this.executeRequest(request.data);
         request.resolve(result);
       } catch (error) {
         console.error('队列处理错误:', error);
@@ -124,23 +124,35 @@ export class WebSearchService {
   }
 
   // 将请求添加到队列
-  queueRequest(type, data) {
+  queueRequest(data) {
     return new Promise((resolve, reject) => {
-      this.requestQueue.push({ type, data, resolve, reject });
+      this.requestQueue.push({ data, resolve, reject });
       this.processQueue();
     });
   }
 
   // 执行实际请求
-  async executeRequest(type, data) {
-    // bing
-    const scraper = new ScrapeData();
-    const results = await scraper.bing(data);
-    return {
-      type: 'text',
-      message: '这是搜索引擎的返回结果',
-      answer: results,
-      question: data
+  async executeRequest(data) {
+    try {
+      const scraper = new ScrapeData();
+      let results = [];
+      results = await scraper.bing(data);
+
+      return {
+        type: 'text',
+        message: `这是搜索引擎的返回结果`,
+        answer: results,
+        question: data
+      };
+      
+    } catch (err) {
+      console.error('搜索引擎执行失败:', err.message);
+      return {
+        type: 'error',
+        message: '爬取失败',
+        error: err.message,
+        question: data
+      };
     }
   }
 
@@ -162,9 +174,9 @@ export class WebSearchService {
   }
 
   // Ask方法
-  Ask = async (StrQuestion) => {
+  async Ask(StrQuestion) {
     try {
-      const result = await this.ProcessRequest(StrQuestion);
+      const result = await this.queueRequest(StrQuestion);
       return result;
     } catch (error) {
       console.error('Ask error:', error);
@@ -173,9 +185,10 @@ export class WebSearchService {
   }
 }
 
+
 // Example about use ScrapeData
 // (async () => {
 //   const scraper = new ScrapeData();
-//   const results = await scraper.google('114514');
+//   const results = await scraper.bing('114514');
 //   console.log(results);
 // })();
