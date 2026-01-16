@@ -179,7 +179,7 @@ export class AISearchService {
   async executeImageRequest(prompt) {
     try {
       const response = await this.AI.createImages({
-        model: "cogView-4-250304",
+        model: "cogview-3-flash",
         prompt: prompt
       });
 
