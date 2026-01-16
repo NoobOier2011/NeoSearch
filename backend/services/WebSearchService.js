@@ -133,7 +133,15 @@ export class WebSearchService {
 
   // 执行实际请求
   async executeRequest(type, data) {
-    // todo
+    // bing
+    const scraper = new ScrapeData();
+    const results = await scraper.bing(data);
+    return {
+      type: 'text',
+      message: '这是搜索引擎的返回结果',
+      answer: results,
+      question: data
+    }
   }
 
   // 提取错误信息的辅助函数
